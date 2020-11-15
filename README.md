@@ -10,9 +10,9 @@ Please follow the instructions below and fill in the information requested when 
 
 |               | Information   |
 |:-------------:|:-------------:|
-| Student Name  | name-here     |
-| Student ID    | id-here       |
-| Student Email | email-here    |
+| Student Name  | Andy Shi      |
+| Student ID    | 920579202     |
+| Student Email | ashi2@mail.sfsu.edu    |
 
 
 
