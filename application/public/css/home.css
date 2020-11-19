@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');
+
+:root {
+    --accent-color: rgb(27,165,71);
+    --accent-color-light: rgb(46,191,92);
+    --accent-color-dark: rgb(15,136,58);
+    --accent-off-white: rgb(238,251,244);
+    --accent-color-75: rgba(27,165,71,0.75);
+    --accent-color-50: rgba(27,165,71,0.5);
+    --accent-color-25: rgba(27,165,71,0.25);
+    --default-font: 'Rubik', sans-serif;
+    --secondary-font: 'Arimo', sans-serif;
+}
+
+body {
+    font-family: var(--secondary-font);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background: var(--accent-off-white);
+}
+
+header h1 {
+    font-family: var(--default-font);
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 48px;
+    margin: 40px 40px;
+}
+
+.content-container {
+    width: 90vw;
+    max-width: 1920px;
+    height: auto;
+    /* background: gray; */
+}
+
+.grid-info-text {
+    margin: 0px 40px;
+}
+
+.photo-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.photo-grid-item {
+    display: flex;
+    flex-direction: column;
+    width: calc(calc(100% - 400px) / 5);
+    height: 100%;
+    margin: 40px;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.5s, transform 0.5s;
+    cursor: pointer;
+}
+
+.photo-grid-item:hover img {
+    transform: scale(0.9);
+}
+
+.photo-grid-item img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.25s;
+}
+
+.fade-out {
+    opacity: 0 !important;
+    transform: scale(0) !important;
+}
+
+.photo-grid-item p {
+    width: auto;
+}
+
+@media only screen and (max-width: 1280px) {
+    .photo-grid-item {
+        width: calc(calc(100% - 320px) / 4);
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    header h1 {
+        margin: 20px;
+    }
+    .grid-info-text {
+        margin: 20px;
+    }
+    .photo-grid-item {
+        width: calc(calc(100% - 120px) / 3);
+        margin: 20px;
+    }
+}

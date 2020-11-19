@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="public\css\formui.css">
+    <link rel="stylesheet" type="text/css" href="public\css\globaltheme.css">
+    <script type="text/javascript" src="public\js\registrationValidation.js"></script>
+  </head>
+  <body class="flex-center-column">
+    <header>
+      <h1>Register</h1>
+    </header>
+  <form class="main-container-card" onsubmit="return checkAllValid();">
+      <div class="input-container">
+        <label for="username">Username</label> 
+        <input class="input-field" type="text" id="username" onchange="validateUsername(this);" required>
+      </div>
+      <div class="input-container">
+        <label for="email">Email</label>
+        <input class="input-field" type="email" id="email" required>
+      </div>
+      <div class="input-container">
+        <label for="password">Password</label>
+        <input class="input-field" type="password" id="password" onchange="validatePassword(this);" required>
+      </div>
+      <div class="input-container">
+        <label for="confirm-password">Confirm Password</label>
+        <input class="input-field" type="password" id="confirm-password" onchange="inputValuesSame(this, document.getElementById('password'));" required>
+      </div>
+      <div class="input-container">
+        <label class="input-check" for="check-13">
+        <input class="checkbox" type="checkbox" id="check-13" required>Are you 13 years or older?
+        </label>
+      </div>
+      <div class="input-container">
+        <label class="input-check" for="check-agreement">
+          <input class="checkbox" type="checkbox" id="check-agreement" required>Do you agree to the <a href="#">TOS</a> and <a href="#">Privacy Agreement</a>?
+        </label>
+      </div>
+      <button class="main-action-button" id="register-button" type="submit">Register</button>
+    </form>
+  </body>
+</html>
