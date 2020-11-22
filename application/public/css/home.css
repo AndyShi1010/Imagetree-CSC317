@@ -17,8 +17,8 @@ body {
     font-family: var(--secondary-font);
     padding: 0;
     margin: 0;
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     background: var(--accent-off-white);
 }
 

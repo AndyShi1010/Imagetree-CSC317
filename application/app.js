@@ -15,7 +15,7 @@ app.engine(
         layoutsDir: path.join(__dirname, "views/layouts"),
         partialsDir: path.join(__dirname,"views/partials"),
         extname: ".hbs",
-        defaultLayout: "home",
+        defaultLayout: "default",
         helpers: {}
     })
 );

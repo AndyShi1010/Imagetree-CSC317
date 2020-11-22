@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="public/css/globaltheme.css">
+    {{#each css}}
+    <link rel="stylesheet" type="text/css" href="public/css/{{this}}">
+    {{/each}}
+  </head>
+
+  <body>
+      {{> header}}
+      {{{body}}}
+      {{!-- {{> footer}} --}}
+  </body>
+
+</html>

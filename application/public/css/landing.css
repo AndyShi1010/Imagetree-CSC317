@@ -1,0 +1,53 @@
+#top-section {
+    height: calc(100vh - 80px);
+    width: 100%;
+    background-image: url(../assets/patternpad.svg);
+    background-position: center;
+    background-size: cover;
+    /* background-color: var(--accent-off-white); */
+    margin: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#top-container {
+    margin: 0vh 20vw;
+}
+
+#top-container h1 {
+    margin: 0px;
+}
+
+#top-container h2 {
+    color: black;
+    font-size: 24px;
+}
+
+#top-action-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+#middle1-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 90px;
+    flex-direction: row;
+    height: 100%;
+    background-color: var(--accent-color);
+    padding: 120px 20vw;
+}
+
+#middle1-container .icon-text-block {
+    max-width: 360px;
+}
+
+.icon-text-block h2 {
+    color: white;
+}
+
+.icon-text-block p {
+    color: white;
+    line-height: 1.35;
+}
