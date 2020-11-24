@@ -24,7 +24,6 @@ function validateUsername(inputElement) {
         '<p class="error-msg">Username does not contain 3 or more alphanumeric characters.</p>'
         );
     }
-    console.log("UsernameValid: " +  usernameValid);
 }
 
 function validateEmail(inputElement) {
@@ -68,8 +67,6 @@ function validatePassword(inputElement) {
         '<p class="error-msg">Password needs to have 8 characters or more.</p>'
         );
     }
-    console.log("PasswordValid: " +  passwordValid);
-
 }
 
 function inputValuesSame(inputElement, checkWithElement) {
@@ -81,7 +78,6 @@ function inputValuesSame(inputElement, checkWithElement) {
         }
     }
     passwordSame = (inputElement.value == checkWithElement.value);
-    console.log(passwordSame);
     if (!passwordSame) {
         inputElement.insertAdjacentHTML('beforebegin', 
         '<p class="error-msg">Passwords are not the same.</p>'

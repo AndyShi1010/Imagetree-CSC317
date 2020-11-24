@@ -4,6 +4,7 @@
     background-image: url(../assets/patternpad.svg);
     background-position: center;
     background-size: cover;
+    background-attachment: fixed;
     /* background-color: var(--accent-off-white); */
     margin: 0;
     position: relative;
@@ -30,21 +31,31 @@
 }
 
 #middle1-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 90px;
-    flex-direction: row;
+    display: flex;
+    /* grid-template-columns: repeat(auto-fill, 1fr); */
+    /* column-gap: 90px; */
+    /* flex-direction: row;
+    justify-content: space-between; */
     height: 100%;
     background-color: var(--accent-color);
     padding: 120px 20vw;
+    flex-wrap: wrap;
+}
+
+#middle1-container .text-block-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* see notes below */
+    grid-gap: 90px;
 }
 
 #middle1-container .icon-text-block {
-    max-width: 360px;
+    /* margin: 30px 30px;
+    min-width: 200px;
+    width: 300px; */
 }
 
 .icon-text-block h2 {
-    color: white;
+    color: var(--accent-off-white);
 }
 
 .icon-text-block p {

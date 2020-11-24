@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/home', function(req, res, next) {
-  res.render('home');
+  res.render('home', {css: ['home.css'], js: ['home.js']});
 });
 
 router.get('/login', (req, res, next) => {
@@ -15,11 +15,16 @@ router.get('/login', (req, res, next) => {
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('registration', {css: ['registration.css']});
+  res.render('registration', {css: ['registration.css'], js: ['registrationValidation.js']});
 });
 
 router.get('/tos', function(req, res, next) {
   res.render('tos');
+});
+
+
+router.get('/privacy', function(req, res, next) {
+  res.render('privacy');
 });
 
 
