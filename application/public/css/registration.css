@@ -1,3 +1,6 @@
 body {
-    background-color: var(--accent-off-white);
+    background-image: url(../assets/pattern3.svg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }

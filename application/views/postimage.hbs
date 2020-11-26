@@ -1,25 +1,34 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Post an Image</title>
-    <link rel="stylesheet" type="text/css" href="..\css\postimage.css">
-  </head>
-  <body>
-    <header>
+<div class="flex-center-column">
+  <header>
       <h1>Post an Image</h1>
-    </header>
-    <form class="card">
+  </header>
+  <form class="main-container-card">
+    <div class="input-container">
+      <label class="input-file" for="post-file">
+        <p class="input-file-labeltext">Upload File</p>
+        <input class="filebox" type="file" id="post-file" accept="image/*" onchange="displayFileName(this, event);" required>
+        <span class="rendered-filebox">Select File</span>
+      </label>
+    </div>
+    <div class="input-container">
       <label for="post-title">Post Title</label>
       <input class="input-field" type="text" id="post-title" required>
+    </div>
+    <div class="input-container">
       <label for="post-desciption">Post Description</label>
       <textarea class="input-field" id="post-desciption"></textarea>
-      <label for="post-file">Upload File</label>
-      <input class="input-file" type="file" id="post-file" accept="image/*" required>
+    </div>
+    <div class="input-container">
       <label class="input-check" for="check-policy">
-        <input class="checkbox" type="checkbox" id="check-policy" required>Have you accepted our <a href="#">Acceptable Use Policy</a>?
+        <input class="checkbox" type="checkbox" id="check-policy" required>
+        <span class="rendered-checkbox"></span>
+        <p>
+          Have you accepted our <a href="#">Acceptable Use Policy</a>?
+        </p>
       </label>
-      <button id="submit-button" type="submit">Submit</button>
-    </form>
-  </body>
-</html>
+    </div>
+    <button class="main-action-button" id="submit-button" type="submit">Post</button>
+  </form>
+  {{> min-footer}}
+</div>
+

@@ -3,5 +3,8 @@ body {
     /* background-image: url(../assets/patternpad.svg);
     background-position: center;
     background-size: cover; */
-    background-color: var(--accent-off-white);
+    background-image: url(../assets/pattern2.svg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }

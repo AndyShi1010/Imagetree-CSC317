@@ -11,20 +11,23 @@ router.get('/home', function(req, res, next) {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', {css: ['login.css', 'formui.css']});
+  res.render('login', {css: ['login.css', 'formui.css'], hideFooter: true});
 });
 
-router.get('/register', function(req, res, next) {
-  res.render('registration', {css: ['registration.css'], js: ['registrationValidation.js']});
+router.get('/signup', function(req, res, next) {
+  res.render('registration', {css: ['registration.css', 'formui.css'], js: ['registrationValidation.js'], hideFooter: true});
 });
 
 router.get('/tos', function(req, res, next) {
   res.render('tos');
 });
 
-
 router.get('/privacy', function(req, res, next) {
   res.render('privacy');
+});
+
+router.get('/post', function(req, res, next) {
+  res.render('postimage', {css: ['formui.css'], js: ['postimage.js'], hideFooter: true});
 });
 
 

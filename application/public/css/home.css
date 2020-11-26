@@ -1,20 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');
-
-:root {
-    --accent-color: rgb(27,165,71);
-    --accent-color-light: rgb(46,191,92);
-    --accent-color-dark: rgb(15,136,58);
-    --accent-off-white: rgb(238,251,244);
-    --accent-color-75: rgba(27,165,71,0.75);
-    --accent-color-50: rgba(27,165,71,0.5);
-    --accent-color-25: rgba(27,165,71,0.25);
-    --default-font: 'Rubik', sans-serif;
-    --secondary-font: 'Arimo', sans-serif;
-}
-
 body {
-    background: var(--accent-off-white);
+    /* background: var(--accent-off-white); */
 }
 
 header h1 {
@@ -51,14 +36,16 @@ header h1 {
     cursor: pointer;
 }
 
-.photo-grid-item:hover img {
-    transform: scale(0.9);
-}
-
 .photo-grid-item img {
     width: 100%;
     height: auto;
-    transition: transform 0.25s;
+    transition: box-shadow 0.25s, border-radius 0.25s;
+}
+
+.photo-grid-item:hover img {
+    /* transform: scale(0.9); */
+    box-shadow: 0px 0px 0px 2px var(--accent-color), 0px 3px 12px var(--accent-color-75);
+    border-radius: 4px;
 }
 
 .fade-out {

@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="public/css/globaltheme.css">
     {{#each css}}
     <link rel="stylesheet" type="text/css" href="public/css/{{this}}">
@@ -14,7 +15,11 @@
   <body>
       {{> header}}
       {{{body}}}
-      {{!-- {{> footer}} --}}
+
+      {{#if hideFooter}}
+      {{else}}
+      {{> footer}}
+      {{/if}}
   </body>
 
 </html>

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
 
 :root {
     --accent-color: rgb(27,165,71);
@@ -146,28 +145,33 @@ footer #footer-links a:hover {
     text-decoration: underline;
 }
 
-footer.min-footer {
-    display: block;
+.min-footer {
+    display: flex;
     width: auto;
     margin-bottom: 40px;
-    padding: 10px;
-    background: rgba(255,255,255,0.75);
-    border-radius: 4px;
-    backdrop-filter: blur(10px);
+    justify-content: center;
 }
 
-footer.min-footer a {
-    margin-left: 20px;
+.min-footer #min-footer-links {
+    display: flex;
+    justify-content: center;
+    background: rgb(255,255,255);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.min-footer a {
+    margin-left: 30px;
     color: var(--accent-color);
     font-weight: 700;
     text-decoration: none;
 }
 
-footer.min-footer a:hover {
+.min-footer a:hover {
     text-decoration: underline;
 }
 
-footer.min-footer a:first-child {
+.min-footer a:first-child {
     margin-left: 0;
 }
 
