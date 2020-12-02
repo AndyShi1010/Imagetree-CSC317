@@ -46,6 +46,7 @@ form .input-container {
     min-width: 150px;
     max-width: 400px;
     max-height: 200px;
+    resize: vertical;
 }
 
 .input-field:focus {
@@ -71,6 +72,7 @@ form .input-container {
 }
 
 .input-check .rendered-checkbox {
+    min-width: 20px;
     width: 20px;
     height: 20px;
     border-radius: 4px;
@@ -94,6 +96,7 @@ form .input-container {
 
 .input-check p {
     margin: 0;
+    line-height: 1.25;
 }
 
 .input-check a {
