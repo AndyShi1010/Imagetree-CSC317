@@ -2,15 +2,14 @@
   <header>
     <h1>Login</h1>
   </header>
-  <form class="main-container-card">
+  <form class="main-container-card" method="POST" action="/users/login" enctype="application/x-www-form-urlencoded">
     <div class="input-container">
       <label for="username">Username</label>
-
-      <input class="input-field" type="text" id="username" required>  
+      <input name="username" class="input-field" type="text" id="username" required>  
     </div>
     <div class="input-container">
       <label for="password">Password</label>
-      <input class="input-field" type="password" id="password" required>
+      <input name="password" class="input-field" type="password" id="password" required>
     </div>
     <button class="main-action-button" id="login-button" type="submit">Login</button>
   </form>

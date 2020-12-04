@@ -88,8 +88,8 @@ function inputValuesSame(inputElement, checkWithElement) {
 function checkAllValid() {
     if (usernameValid && passwordValid && passwordSame) {
         alert("All inputs are valid. Registration successful");
-        location.reload();
-        // return true;
+        // location.reload();
+        return true;
     } else {
         let buttonClone = document.getElementById("register-button").cloneNode(true);
         document.getElementById("register-button").parentNode.replaceChild(buttonClone, document.getElementById("register-button"));
