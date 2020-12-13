@@ -87,7 +87,7 @@ function inputValuesSame(inputElement, checkWithElement) {
 
 function checkAllValid() {
     if (usernameValid && passwordValid && passwordSame) {
-        alert("All inputs are valid. Registration successful");
+        // alert("All inputs are valid. Registration successful");
         // location.reload();
         return true;
     } else {

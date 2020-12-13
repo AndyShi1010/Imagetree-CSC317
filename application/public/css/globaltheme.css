@@ -88,6 +88,7 @@ header #header-links > a {
     color: var(--accent-color);
     font-weight: 700;
     font-size: 16px;
+    user-select: none;
 }
 
 header #header-links > a:hover {
@@ -235,6 +236,7 @@ h2 {
     text-decoration: none;
     display: block;
     white-space: nowrap;
+    user-select: none;
 }
 
 .primary-action-button:hover {
@@ -267,6 +269,7 @@ h2 {
     box-shadow: inset 0px 0px 0px 2px var(--accent-color);
     display: block;
     white-space: nowrap;
+    user-select: none;
 }
 
 .secondary-action-button:hover {

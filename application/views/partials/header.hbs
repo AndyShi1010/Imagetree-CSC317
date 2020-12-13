@@ -38,8 +38,25 @@
         <div id="header-links">
             <a href="/home">Browse</a>
             <div id="header-account">
-                <a href="/login" class="secondary-action-button action-button-right-aligned" id="header-secondary-action">Log In</a>
-                <a href="/signup" class="primary-action-button action-button-right-aligned" id="header-primary-action">Sign Up</a>
+                {{#if logged}}
+                    <a class="secondary-action-button action-button-right-aligned" id="header-logout">Log Out</a>
+                    <script>
+                        let element = document.getElementById('header-logout');
+                        if (element) {
+                            element.onclick = (event) => {
+                                fetch('/users/logout', {
+                                    method: "POST"
+                                })
+                                .then((data) => {
+                                    location.replace('/login');
+                                })
+                            }
+                        }
+                    </script>
+                {{else}}
+                    <a href="/login" class="secondary-action-button action-button-right-aligned" id="header-login">Log In</a>
+                    <a href="/signup" class="primary-action-button action-button-right-aligned" id="header-signup">Sign Up</a>
+                {{/if}}
             </div>
         </div>    
     </div>
