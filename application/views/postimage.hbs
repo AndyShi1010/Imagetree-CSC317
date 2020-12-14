@@ -2,21 +2,24 @@
   <header>
       <h1>Post an Image</h1>
   </header>
-  <form class="main-container-card">
+  <form class="main-container-card" method="POST" enctype="multipart/form-data" action="/posts/createPost">
+    {{#if (emptyObject messages)}}
+    {{> flash}}
+    {{/if}}
     <div class="input-container">
       <label class="input-file" for="post-file">
         <p class="input-file-labeltext">Upload File</p>
-        <input class="filebox" type="file" id="post-file" accept="image/*" onchange="displayFileName(this, event);" required>
+        <input name="file" class="filebox" type="file" id="post-file" accept="image/*" onchange="displayFileName(this, event);" required>
         <span class="rendered-filebox">Select File</span>
       </label>
     </div>
     <div class="input-container">
-      <label for="post-title">Post Title</label>
-      <input class="input-field" type="text" id="post-title" required>
+      <label for="post-title">Title</label>
+      <input name="title" class="input-field" type="text" id="post-title" required>
     </div>
     <div class="input-container">
-      <label for="post-desciption">Post Description</label>
-      <textarea class="input-field" id="post-desciption"></textarea>
+      <label for="post-desciption">Description</label>
+      <textarea name="description" class="input-field" id="post-desciption"></textarea>
     </div>
     <div class="input-container">
       <label class="input-check" for="check-policy">

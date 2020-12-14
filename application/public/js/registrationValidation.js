@@ -16,12 +16,12 @@ function validateUsername(inputElement) {
     usernameValid = test1 && test2;
     if (!test1) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Username does not start with a letter.</p>'
+        '<p class="error-msg">Username must start with a letter.</p>'
         );
     }
     if (!test2) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Username does not contain 3 or more alphanumeric characters.</p>'
+        '<p class="error-msg">Username must contain 3 or more alphanumeric characters.</p>'
         );
     }
 }
@@ -31,9 +31,6 @@ function validateEmail(inputElement) {
 }
 
 function validatePassword(inputElement) {
-    // const containUpper = /^(?=.*[A-Z])[A-Za-z\d/*\-+!@#$^]+$/g;
-    // const containNum = /^(?=.*[\d])[A-Za-z\d/*\-+!@#$^]+$/g;
-    // const containSpecial = /^(?=.*[/*\-+!@#$^])[A-Za-z\d/*\-+!@#$^]+$/g
     const containUpper = /[A-Z]+/g;
     const containNum = /\d+/g;
     const containSpecial = /[/*\-+!@#$^&]+/g
@@ -49,29 +46,28 @@ function validatePassword(inputElement) {
     passwordValid = test1 && test2 && test3 && test4;
     if (!test1) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Password does not contain an uppercase letter.</p>'
+        '<p class="error-msg">Password must contain an uppercase letter.</p>'
         );
     }
     if (!test2) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Password does not contain a number.</p>'
+        '<p class="error-msg">Password must contain a number.</p>'
         );
     }
     if (!test3) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Password does not contain one of the following special characters: / * - + ! @ # $ ^ &.</p>'
+        '<p class="error-msg">Password must contain one of the following special characters: / * - + ! @ # $ ^ &.</p>'
         );
     }
     if (!test4) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Password needs to have 8 characters or more.</p>'
+        '<p class="error-msg">Password must be 8 characters or longer.</p>'
         );
     }
+    inputValuesSame(document.getElementById('confirm-password'), inputElement);
 }
 
 function inputValuesSame(inputElement, checkWithElement) {
-    // console.log(inputElement.value + ", " + checkWithElement.value);
-    // console.log(inputElement.value == checkWithElement.value);
     if (inputElement.parentNode.getElementsByClassName('error-msg').length != 0) {
         while (inputElement.parentNode.getElementsByClassName('error-msg')[0]) {
             inputElement.parentNode.getElementsByClassName('error-msg')[0].parentNode.removeChild(inputElement.parentNode.getElementsByClassName('error-msg')[0]);
@@ -80,7 +76,7 @@ function inputValuesSame(inputElement, checkWithElement) {
     passwordSame = (inputElement.value == checkWithElement.value);
     if (!passwordSame) {
         inputElement.insertAdjacentHTML('beforebegin', 
-        '<p class="error-msg">Passwords are not the same.</p>'
+        '<p class="error-msg">Passwords do not match.</p>'
         );
     }
 }

@@ -1,0 +1,43 @@
+{{#if minFlash}}
+<div class="min-flash">
+    <div class="flash-container">
+        {{#if messages.error}}
+        <div class="flash-message error">
+            <div class="flash-content">
+                <span class="material-icons-round">error</span>
+                {{messages.error}}
+            </div>
+            <span class="material-icons-round flash-close" onclick="closeFlash(this);">close</span>
+        </div>
+        {{else}}
+        <div class="flash-message success auto-dismiss">
+            <div class="flash-content">
+                <span class="material-icons-round">check</span>
+                {{messages.success}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+{{else}}
+<div class="banner-flash">
+    <div class="flash-container">
+        {{#if messages.error}}
+        <div class="flash-message error">
+            <div class="flash-content">
+                <span class="material-icons-round">error</span>
+                {{messages.error}}
+            </div>
+            <span class="material-icons-round flash-close" onclick="closeFlash(this);">close</span>
+        </div>
+        {{else}}
+        <div class="flash-message success auto-dismiss">
+            <div class="flash-content">
+                <span class="material-icons-round">check</span>
+                {{messages.success}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+{{/if}}

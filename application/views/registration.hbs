@@ -3,6 +3,9 @@
     <h1>Sign Up</h1>
   </header>
   <form class="main-container-card" method="POST" action="/users/register" enctype="application/x-www-form-urlencoded" onsubmit="return checkAllValid();">
+      {{#if (emptyObject messages)}}
+      {{> flash}}
+      {{/if}}
     <div class="input-container">
       <label for="username">Username</label> 
       <input name="username" class="input-field" type="text" id="username" onchange="validateUsername(this);" required>

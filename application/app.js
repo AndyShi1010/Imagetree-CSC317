@@ -5,6 +5,7 @@ var logger = require('morgan');
 var handlebars = require('express-handlebars');
 var sessions = require('express-session');
 var mysqlSession = require('express-mysql-session')(sessions);
+var flash = require('express-flash');
 
 var errorPrint = require('./helpers/debug/debugprinters').errorPrint;
 var requestPrint = require('./helpers/debug/debugprinters').requestPrint;
@@ -12,6 +13,7 @@ var successPrint = require('./helpers/debug/debugprinters').successPrint;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 var dbRouter = require('./routes/dbtest');
 
 var app = express();
@@ -23,7 +25,11 @@ app.engine(
         partialsDir: path.join(__dirname,"views/partials"),
         extname: ".hbs",
         defaultLayout: "default",
-        helpers: {}
+        helpers: {
+            emptyObject: (obj) => {
+                return !(obj.constructor === Object && Object.keys(obj).length == 0);
+            }
+        }
     })
 );
 
@@ -35,6 +41,8 @@ app.use(sessions({
     resave: false,
     saveUninitialized: false
 }));
+
+app.use(flash());
 
 app.set("view engine", "hbs");
 app.use(logger('dev'));
@@ -49,6 +57,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+    console.log(req.session);
     if(req.session.username) {
         res.locals.logged = true;
     }
@@ -58,6 +67,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/dbtest', dbRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 app.use((err, req, res, next) => {
     res.status(500);

@@ -16,19 +16,67 @@ router.post('/register', (req, res, next) => {
   let password = req.body.password;
   let confirmpassword = req.body.confirmpassword;
 
+  // let errorString = "Error: ";
+  // let invalid = false;
+  // const beginWithAZ = /[A-Za-z]/g;
+  // const threePlusAlphaNum = /(.*[A-Za-z0-9]){3}/g;
+  // const containUpper = /[A-Z]+/g;
+  // const containNum = /\d+/g;
+  // const containSpecial = /[/*\-+!@#$^&]+/g
+
+  // if(beginWithAZ.test(username) == false) {
+  //   errorString += " Username must start with a letter.";
+  //   invalid = true;
+  // }
+
+  // if(threePlusAlphaNum.test(username) == false) {
+  //   errorString += " Username must contain 3 or more alphanumeric characters.";
+  //   invalid = true;
+  // }
+
+  // if(containUpper.test(password) == false) {
+  //   errorString += " Password must contain an uppercase letter.";
+  //   invalid = true;
+  // }
+
+  // if(containNum.test(password) == false) {
+  //   errorString += " Password must contain a number.";
+  //   invalid = true;
+  // }
+
+  // if(containSpecial.test(password) == false) {
+  //   errorString += " Password must contain one of the following special characters: / * - + ! @ # $ ^ &.";
+  //   invalid = true;
+  // }
+
+  // if(password.length < 8) {
+  //   errorString += " Password must be 8 characters or longer.";
+  //   invalid = true;
+  // }
+
+  // if (password != confirmpassword) {
+  //   errorString += " Passwords do not match.";
+  //   invalid = true;
+  // }
+
+  // if (invalid) {
+  //   console.log("Error thrown");
+  //   throw new UserError(errorString, "/signup", 200);
+  // }
+
   db.execute("SELECT * FROM users WHERE username=?", [username])
   .then(([results, fields]) => {
     if(results && results.length == 0) {
       return db.execute("SELECT * FROM users WHERE email=?", [email]);
     } else {
-      throw new UserError("Registration Failed: Username already exists", "/signup", 200);
+      throw new UserError("Username already exists", "/signup", 200);
     }
   })
   .then(([results, fields]) => {
     if(results && results.length == 0) {
       return bcrypt.hash(password, 12);
     } else {
-      throw new UserError("Registration Failed: Email already exists", "/signup", 200);
+      throw new UserError("Email already exists", "/signup", 200);
     }
   })
   .then((hashedPassword) => {
@@ -46,6 +94,7 @@ router.post('/register', (req, res, next) => {
   .then(([results, fields]) => {
     if(results && results.affectedRows) {
       successPrint("User.js: User was created");
+      req.flash('success', 'Your account is now ready.');
       res.redirect('/login');
     } else {
       throw new UserError("Server Error: User could not be created", "/signup", 500);
@@ -55,6 +104,7 @@ router.post('/register', (req, res, next) => {
     errorPrint("User could not be made", err);
     if(err instanceof UserError) {
       errorPrint(err.getMessage());
+      req.flash('error', err.getMessage());
       res.status(err.getStatus());
       res.redirect(err.getRedirectURL());
     } else {
@@ -78,7 +128,7 @@ router.post('/login', (req, res, next) => {
       return bcrypt.compare(password, hashedPassword);
       // return db.execute("SELECT username, password FROM users WHERE username=? AND password=?;", [username, password]);
     } else {
-      throw new UserError("Error: User does not exist", "/login", 200);
+      throw new UserError("User does not exist.", "/login", 200);
     }
   })
   .then((passwordsMatched) => {
@@ -87,36 +137,18 @@ router.post('/login', (req, res, next) => {
       req.session.username = username;
       req.session.userId = userId;
       res.locals.logged = true;
+      req.flash('success', 'You are now logged in.');
       // res.render('home', {title: "Home | imagetree", css: ['home.css'], js: ['home.js']});
       res.redirect("/home");
     } else {
       throw new UserError("Password is incorrect.", "/login", 200);
     }
   })
-  // .then(([results, fields]) => {
-  //   if (results && results.length == 1) {
-  //     successPrint(`User ${username} is logged in.`);
-  //     res.locals.logged = true;
-  //     res.render('home', {title: "Home | imagetree", css: ['home.css'], js: ['home.js']});
-  //   } else {
-  //     throw new UserError("Invalid username and/or password!", "/login", 200);
-  //   }
-  // })
-
-  // let baseSQL = "SELECT username, password FROM users WHERE username=? AND password=?;"
-  // db.execute(baseSQL, [username, password])
-  // .then(([results, fields]) => {
-  //   if (results && results.length == 1) {
-  //     successPrint(`User ${username} is logged in.`);
-  //     res.redirect('/home');
-  //   } else {
-  //     throw new UserError("Invalid username and/or password!", "/login", 200);
-  //   }
-  // })
   .catch((err) => {
     errorPrint("User login failed!");
     if (err instanceof UserError) {
       errorPrint(err.getMessage());
+      req.flash('error', err.getMessage());
       res.status(err.getStatus());
       res.redirect(err.getRedirectURL());
     } else {

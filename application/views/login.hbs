@@ -3,6 +3,9 @@
     <h1>Login</h1>
   </header>
   <form class="main-container-card" method="POST" action="/users/login" enctype="application/x-www-form-urlencoded">
+      {{#if (emptyObject messages)}}
+      {{> flash}}
+      {{/if}}
     <div class="input-container">
       <label for="username">Username</label>
       <input name="username" class="input-field" type="text" id="username" required>  
