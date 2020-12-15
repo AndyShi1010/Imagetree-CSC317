@@ -1,19 +1,37 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>View Post</title>
-    <link rel="stylesheet" type="text/css" href="..\css\imagepost.css">
-  </head>
-  <body>
-    <header>
-      <h1>View Post</h1>
-    </header>
-    <div class="post">
-      <h2 class="post-title">A Day in San Francisco</h2>
-      <p class="post-author">John Appleseed</p>
-      <p class="post-timestamp">10/10/2020 10:10AM</p>
-      <img class="post-image" src="../assets/sf.jpeg" alt="Post Image">
+<div class="content-container">
+  <div class="post-content">
+    <div class="image-container">
+      <img class="post-image" src="/{{currentPost.photopath}}" alt="Post Image">
     </div>
-  </body>
-</html>
+    <div class="comments">
+      <h1>Comments</h1>
+      <div class="add-comment">
+        <h3>Add a comment</h1>
+      </div>
+      <div class="comment-post">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rem molestiae, repellendus ea est repudiandae, assumenda saepe libero sed quia expedita, aspernatur inventore architecto facilis ipsam nisi? Reprehenderit, eius perferendis.</p>
+      </div>
+      <div class="comment-post">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rem molestiae, repellendus ea est repudiandae, assumenda saepe libero sed quia expedita, aspernatur inventore architecto facilis ipsam nisi? Reprehenderit, eius perferendis.</p>
+      </div>
+      <div class="comment-post">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rem molestiae, repellendus ea est repudiandae, assumenda saepe libero sed quia expedita, aspernatur inventore architecto facilis ipsam nisi? Reprehenderit, eius perferendis.</p>
+      </div>
+      <div class="comment-post">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rem molestiae, repellendus ea est repudiandae, assumenda saepe libero sed quia expedita, aspernatur inventore architecto facilis ipsam nisi? Reprehenderit, eius perferendis.</p>
+      </div>
+      <div class="comment-post">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rem molestiae, repellendus ea est repudiandae, assumenda saepe libero sed quia expedita, aspernatur inventore architecto facilis ipsam nisi? Reprehenderit, eius perferendis.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="right-column">
+    <h2 class="post-title">{{currentPost.title}}</h2>
+    <p class="post-author">by {{currentPost.username}}</p>
+    <p class="post-timestamp">{{timeString}}</p>
+    <p class="post-description">{{currentPost.description}}</p>
+  </div>
+</div>
+

@@ -34,14 +34,14 @@ router.post('/createPost', uploader.single("file"), (req, res, next) => {
         description = "";
     }
 
-    sharp(fileUploaded).resize(200).toFile(thumbDestionation)
+    sharp(fileUploaded).resize(500).toFile(thumbDestionation)
     .then(() => {
         let baseSQL = "INSERT INTO posts (title, description, photopath, thumbpath, created, fk_userid) VALUE (?,?,?,?, now(),?);";
         return db.execute(baseSQL, [title, description, fileUploaded, thumbDestionation, fk_userId]);
     })
     .then(([results, fields]) => {
         if(results && results.affectedRows) {
-            req.flash('success', "Your post was created successfully!");
+            req.flash('success', "Your post was uploaded!");
             res.redirect('/home');
         } else {
             throw new PostError('Post could not be created.', '/post', 200);
