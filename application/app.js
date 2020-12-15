@@ -71,7 +71,7 @@ app.use('/posts', postsRouter);
 
 app.use((err, req, res, next) => {
     res.status(500);
-    res.send('Something went wrong!');
+    res.send('Something went wrong! ' + err);
 })
 
 app.use((err, req, res, next) => {

@@ -1,7 +1,11 @@
 <header class="nav-header">
     <div id="header-container">
         <div id="header-logo">
+            {{#if logged}}
+            <a href="/home" id="header-logo-link"></a>
+            {{else}}
             <a href="/" id="header-logo-link"></a>
+            {{/if}}
             {{!-- <img id="header-logo-image" src="public/assets/logo.svg" alt="logo" href="/"> --}}
             <svg id="header-logo-image" width="100%" height="100%" viewBox="0 0 360 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                 <g transform="matrix(1,0,0,1,-41.0879,-9.41421)">

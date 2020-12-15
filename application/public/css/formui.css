@@ -4,10 +4,14 @@
 }
 
 form label {
-    /* margin: 0px 0px 10px 0px; */
+    margin: 0px 0px 10px 0px;
     display: inline-block;
     font-weight: 400;
     font-family: var(--secondary-font);
+}
+
+form label.input-check, form label.input-file {
+    margin: 0;
 }
 
 form .input-container {
@@ -19,14 +23,18 @@ form .input-container {
 
 .input-container .error-msg {
     font-family: var(--secondary-font);
-    color: var(--error-color);;
-    margin-top: 0;
-    margin-bottom: 10px;
+    color: var(--error-color);
+    margin: 0;
+    margin-top: 10px;
     font-size: 10pt;
 }
 
 .input-container .error-msg:first-of-type {
-    margin-top: 10px;
+    margin-top: 0px;
+}
+
+.input-container .error-msg:last-of-type {
+    margin-bottom: 10px;
 }
 
 .input-field {
@@ -42,7 +50,6 @@ form .input-container {
     border-color: rgb(175,175,175);
     transition: border-color 0.25s ease-in, background 0.25s ease-in;
     outline: none;
-    margin-top: 10px;
     min-width: 150px;
     max-width: 400px;
     max-height: 200px;
@@ -155,7 +162,7 @@ div.filebox-preview {
 }
 
 .filebox-preview img {
-    margin-top: 10px;
+    /* margin-top: 10px; */
     width: auto;
     max-width: 400px;
     height: auto;

@@ -5,6 +5,9 @@
     </header>
     <p class="grid-info-text"></p>
     <div class="photo-grid">
+        {{#each results}}
+        {{> photocard this}}
+        {{/each}}
     </div>
 </div>
 

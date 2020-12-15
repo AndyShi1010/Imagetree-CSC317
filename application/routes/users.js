@@ -61,7 +61,10 @@ router.post('/register', (req, res, next) => {
 
   // if (invalid) {
   //   console.log("Error thrown");
-  //   throw new UserError(errorString, "/signup", 200);
+  //   req.flash('error', errorString);
+  //   res.status(500);
+  //   res.redirect("/signup");
+  //   next(new UserError(errorString, "/signup", 500));
   // }
 
   db.execute("SELECT * FROM users WHERE username=?", [username])

@@ -2,14 +2,15 @@ var express = require('express');
 var router = express.Router();
 var isLoggedIn = require('../middleware/routeprotectors').userIsLoggedIn;
 var notLoggedIn = require('../middleware/routeprotectors').userNotLoggedIn;
+var getRecentPosts = require('../middleware/postgrabber').getRecentPosts;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {title: "imagetree", css: ['landing.css']});
 });
 
-router.get('/home', function(req, res, next) {
-  res.render('home', {title: "Home | imagetree", css: ['home.css'], js: ['home.js']});
+router.get('/home', getRecentPosts, function(req, res, next) {
+  res.render('home', {title: "Home | imagetree", css: ['home.css']});
 });
 
 router.get('/login', notLoggedIn, (req, res, next) => {
