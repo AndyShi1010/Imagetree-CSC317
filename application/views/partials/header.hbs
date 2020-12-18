@@ -39,30 +39,69 @@
                 </g>
             </svg>
         </div>
-        <div id="header-links">
-            <a href="/home">Browse</a>
+        <div class="header-links desktop" id="header-links">
+            <a id="header-links-browse" href="/home">Browse</a>
+            {{#if logged}}
+            <a id="header-links-browse" href="/home">My Posts</a>
+            {{/if}}
+            <form class="search-form">
+                <input value="{{query}}" type="text" class="searchbar" placeholder="Search">
+                <button type="submit" class="search-button" onclick="return runSearch(this);"><span class="material-icons-round">search</span></button>
+            </form>
             <div id="header-account">
                 {{#if logged}}
                     <a href="/post" class="primary-action-button action-button-right-aligned" id="header-post"><span class="material-icons-round">publish</span>Post</a>
-                    <a class="secondary-action-button action-button-right-aligned" id="header-logout">Log Out</a>
-                    <script>
-                        let element = document.getElementById('header-logout');
-                        if (element) {
-                            element.onclick = (event) => {
-                                fetch('/users/logout', {
-                                    method: "POST"
-                                })
-                                .then((data) => {
-                                    location.replace('/login');
-                                })
-                            }
-                        }
-                    </script>
+                    <a href="" class="secondary-action-button action-button-right-aligned header-logout" id="header-logout">Log Out</a>
                 {{else}}
                     <a href="/login" class="secondary-action-button action-button-right-aligned" id="header-login">Log In</a>
                     <a href="/signup" class="primary-action-button action-button-right-aligned" id="header-signup">Sign Up</a>
                 {{/if}}
             </div>
-        </div>    
+        </div>
+        <div class="header-links mobile" id="header-links">
+            <form class="search-form">
+                <input value="{{query}}" type="text" class="searchbar" placeholder="Search">
+                <button type="submit" class="search-button" onclick="return runSearch(this);"><span class="material-icons-round">search</span></button>
+            </form>
+            <div id="mobile-header-menu">
+                <span class="material-icons-round" onclick="showHideMenu(this);">menu</span>
+                <div class="" id="mobile-header-menu-dropdown">
+                    <a id="header-links-browse" href="/home">Browse</a>
+                    {{#if logged}}
+                    <a id="header-links-browse" href="/home">My Posts</a>
+                    <hr>
+                    <a href="/post" id="header-post">Post</a>
+                    <a href="" class="header-logout" id="header-logout">Log Out</a>
+                    {{else}}
+                    <a href="/login" id="header-login">Log In</a>
+                    <a href="/signup" id="header-signup">Sign Up</a>
+                    {{/if}}
+                </div>
+                <script>
+                    function showHideMenu(element) {
+                        element.parentNode.classList.toggle("menu-open");
+                    }
+                    window.addEventListener("resize", function() {
+                        if (window.innerWidth > 960) {
+                            document.getElementById('mobile-header-menu').classList.remove("menu-open");
+                        }
+                    })
+                </script>
+            </div>
+        </div>       
     </div>
+    <script>
+        let logoutList = document.getElementsByClassName('header-logout');
+        console.log(logoutList);
+        for (i = 0; i < logoutList.length; i++) {
+            logoutList[i].onclick = (event) => {
+                fetch('/users/logout', {
+                    method: "POST"
+                })
+                .then((data) => {
+                    location.replace('/login');
+                })
+            }
+        }
+    </script>
 </header>

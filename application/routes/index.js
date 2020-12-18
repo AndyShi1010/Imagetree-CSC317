@@ -30,13 +30,9 @@ router.get('/privacy', function(req, res, next) {
   res.render('privacy', {title: "Privacy Policy | imagetree"});
 });
 
-router.get('/imagepost', function(req, res, next) {
-  res.render('imagepost', {title: "Post | imagetree", css: ['imagepost.css']});
-});
-
 // router.use('/post', isLoggedIn);
 router.get('/post', isLoggedIn, function(req, res, next) {
-  res.render('postimage', {title: "Post | imagetree", css: ['formui.css'], js: ['postimage.js'], hideFooter: true});
+  res.render('postimage', {title: "Post | imagetree", css: ['formui.css', 'postimage.css'], js: ['postimage.js'], hideFooter: true});
 });
 
 router.get('/posts/:id(\\d+)', (req, res, next) => {
@@ -50,12 +46,48 @@ router.get('/posts/:id(\\d+)', (req, res, next) => {
       let timeNew = new Date(results[0].created);
       let timeString = timeNew.toLocaleDateString("en-US") + " at " + timeNew.toLocaleTimeString("en-US");
       console.log(timeString);
-      res.render('imagepost', {currentPost: post, timeString, title: `${post.title} | imagetree`, css: ['imagepost.css']})
+      res.render('imagepost', {currentPost: post, timeString, title: `${post.title} by ${post.username} | imagetree`, css: ['imagepost.css']})
     } else {
-      req.flash('error', 'Post could not be found.')
+      req.flash('error', 'Post could not be found.');
       res.redirect("/home");
     }
   })
+})
+
+router.get('/search', (req, res, next) => {
+  let searchQuery = req.query.q;
+  if(!searchQuery) {
+      res.send({
+          resultsStatus: "info",
+          message: "No search term was given",
+          results: []
+      });
+  } else {
+      let baseSQL = "SELECT id, title, description, thumbpath, concat_ws(' ', title, description) AS haystack FROM posts HAVING haystack like ? LIMIT 20;"
+      let sqlSearchQuery = "%" + searchQuery + "%";
+      db.execute(baseSQL, [sqlSearchQuery])
+      .then(([results, fields]) => {
+          res.locals.results = results;
+          res.render('home', {isSearch: true, query: searchQuery, title: `Search for ${searchQuery} | imagetree`, css: ['home.css'], js: ['home.js']});
+          // if (results && results.length) {
+          //     res.send({
+          //         resultsStatus: "info",
+          //         message: `${results.length} result(s) found`,
+          //         results: results
+          //     })
+          // } else {
+          //     res.send({
+          //         resultsStatus: "info",
+          //         message: "No results were found for your search.",
+          //         results: results
+          //     })
+          //     // db.query('SELECT id, title, description, thumbpath, created FROM posts ORDER BY created DESC LIMIT 20', [])
+          //     // .then(([results, fields]) => {
+          //     // })
+          // }
+      })
+      .catch((err) => next(err))
+  }
 })
 
 

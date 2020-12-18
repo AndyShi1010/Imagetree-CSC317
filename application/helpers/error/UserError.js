@@ -2,7 +2,7 @@ class UserError extends Error {
     constructor(message, redirectURL, status) {
         super(message);
         this.redirectURL = redirectURL;
-        this.status - status;
+        this.status = status;
     }
 
     getMessage() {

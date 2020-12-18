@@ -57,6 +57,6 @@ router.post('/createPost', uploader.single("file"), (req, res, next) => {
             next(err);
         }
     }) 
-})
+});
 
 module.exports = router;

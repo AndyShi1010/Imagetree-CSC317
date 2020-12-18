@@ -35,7 +35,6 @@ function resizeImages() {
 
     for (i = 0; i < imageContainers.length; i++) {
         let containerWidth = window.getComputedStyle(imageContainers[i].parentNode).getPropertyValue("width");
-        console.log(containerWidth);
         imageContainers[i].style.height = containerWidth;
     }
 }

@@ -8,6 +8,7 @@ var bcrypt = require('bcrypt');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
+  // throw new UserError('Post could not be created.', '/post', 200);
 });
 
 router.post('/register', (req, res, next) => {

@@ -11,6 +11,8 @@ header h1 {
     max-width: 1920px;
     height: auto;
     margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
     /* background: gray; */
 }
 
@@ -65,15 +67,17 @@ header h1 {
 .photo-grid-item p {
     width: auto;
     margin: 10px 0px 0px 0px;
+    line-height: 1.5;
 }
 
 @media only screen and (max-width: 1280px) {
     .photo-grid-item {
-        width: calc(calc(100% - 320px) / 4);
+        width: calc(calc(100% - 240px) / 4);
+        margin: 30px;
     }
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 720px) {
     header h1 {
         margin: 20px;
     }

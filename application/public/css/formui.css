@@ -54,6 +54,7 @@ form .input-container {
     max-width: 400px;
     max-height: 200px;
     resize: vertical;
+    line-height: 1.25;
 }
 
 .input-field:focus {
