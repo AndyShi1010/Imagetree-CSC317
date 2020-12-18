@@ -16,6 +16,7 @@
 
 .material-icons-round {
     user-select: none;
+    font-weight: normal;
 }
 
 body {
@@ -154,17 +155,32 @@ header .header-links > a:first-of-type {
     margin-left: 30px;
 }
 
-header .header-links > a {
+header .header-links a.header-link {
     text-decoration: none;
     color: var(--accent-color);
     font-weight: 700;
     font-size: 16px;
     user-select: none;
     margin-right: 30px;
+    display: inline-flex;
+    align-items: center;
 }
 
-header .header-links > a:hover {
+header .header-links a.header-link span {
+    margin-right: 10px;
+}
+
+header .header-links a.header-link p {
+    margin: 0;
+    white-space: nowrap;
+}
+
+header .header-links a.header-link:hover p{
     text-decoration: underline;
+}
+
+header .header-links a.header-link:hover span {
+    text-decoration: none;
 }
 
 header #header-account {
@@ -456,17 +472,21 @@ h2 {
     header .header-links form {
         margin-left: 30px;
     }
-    header .header-links a {
+    header .header-links a.header-link {
         text-decoration: none;
         color: var(--accent-color);
         font-weight: 700;
         font-size: 16px;
         user-select: none;
         padding: 10px;
+        margin-right: 0;
     } 
-    header .header-links a:hover {
-        text-decoration: underline;
+    header .header-links a.header-link .header-link-icon {
+        padding: 0px;
     }
+    /* header .header-links a:hover {
+        text-decoration: underline;
+    } */
     #mobile-header-menu {
         position: relative;
         margin-left: 20px;
@@ -483,7 +503,7 @@ h2 {
     #mobile-header-menu.menu-open {
         /* box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.2); */
     }
-    #mobile-header-menu span{
+    #mobile-header-menu span.menu-icon{
         /* position: relative; */
         padding: 8px;
         display: inline-flex;
@@ -495,7 +515,9 @@ h2 {
         color: var(--accent-color);
         box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.2);
         border-radius: 4px 4px 0px 0px;
+        background: white;
     }
+    
     #mobile-header-menu-dropdown {
         display: flex;
         visibility: hidden;

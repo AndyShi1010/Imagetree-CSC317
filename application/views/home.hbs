@@ -7,8 +7,9 @@
     <p class="grid-info-text">There are <strong>{{results.length}}</strong> result(s) for {{query}}.</p>
     {{else}}
     <header>
-        <h1>Home</h1>
+        <h1>{{heading}}</h1>
     </header>
+    <p class="grid-info-text">{{subheading}}</p>
     {{/if}}
     <div class="photo-grid">
         {{#each results}}

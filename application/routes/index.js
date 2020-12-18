@@ -4,6 +4,7 @@ var isLoggedIn = require('../middleware/routeprotectors').userIsLoggedIn;
 var notLoggedIn = require('../middleware/routeprotectors').userNotLoggedIn;
 var getRecentPosts = require('../middleware/postgrabber').getRecentPosts;
 var db = require('../config/database');
+var PostModel = require('../models/Posts');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -63,32 +64,37 @@ router.get('/search', (req, res, next) => {
           results: []
       });
   } else {
-      let baseSQL = "SELECT id, title, description, thumbpath, concat_ws(' ', title, description) AS haystack FROM posts HAVING haystack like ? LIMIT 20;"
-      let sqlSearchQuery = "%" + searchQuery + "%";
-      db.execute(baseSQL, [sqlSearchQuery])
-      .then(([results, fields]) => {
+    PostModel.search(searchQuery)
+    .then((results) => {
+      // if(results.length) {
+        if (results) {
           res.locals.results = results;
-          res.render('home', {isSearch: true, query: searchQuery, title: `Search for ${searchQuery} | imagetree`, css: ['home.css'], js: ['home.js']});
-          // if (results && results.length) {
-          //     res.send({
-          //         resultsStatus: "info",
-          //         message: `${results.length} result(s) found`,
-          //         results: results
-          //     })
-          // } else {
-          //     res.send({
-          //         resultsStatus: "info",
-          //         message: "No results were found for your search.",
-          //         results: results
-          //     })
-          //     // db.query('SELECT id, title, description, thumbpath, created FROM posts ORDER BY created DESC LIMIT 20', [])
-          //     // .then(([results, fields]) => {
-          //     // })
-          // }
+        }
+        res.render('home', {isSearch: true, query: searchQuery, title: `Search for ${searchQuery} | imagetree`, css: ['home.css'], js: ['home.js']});
+      // }
+    })
+      // let baseSQL = "SELECT id, title, description, thumbpath, concat_ws(' ', title, description) AS haystack FROM posts HAVING haystack like ? LIMIT 20;"
+      // let sqlSearchQuery = "%" + searchQuery + "%";
+      // db.execute(baseSQL, [sqlSearchQuery])
+      // .then(([results, fields]) => {
+      //     res.locals.results = results;
+      //     res.render('home', {isSearch: true, query: searchQuery, title: `Search for ${searchQuery} | imagetree`, css: ['home.css'], js: ['home.js']});
+      // })
+      // .catch((err) => next(err))
+  }
+});
+
+router.get('/myposts', isLoggedIn, (req, res, next) => { 
+  console.log("Params: " + req.session.userId);
+  
+  let baseSQL = "SELECT u.username, p.id, p.title, p.description, p.thumbpath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE u.id=?;"
+  db.execute(baseSQL, [req.session.userId])
+      .then(([results, fields]) => {
+        res.locals.results = results;
+        res.render('home', {heading: "My Posts", subheading: `You have ${results.length} post(s)`, title: `${req.session.username}'s Posts | imagetree`, css: ['home.css'], js: ['home.js']});
       })
       .catch((err) => next(err))
-  }
-})
+});
 
 
 module.exports = router;

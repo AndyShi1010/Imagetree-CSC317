@@ -40,9 +40,15 @@
             </svg>
         </div>
         <div class="header-links desktop" id="header-links">
-            <a id="header-links-browse" href="/home">Browse</a>
+            <a class="header-link" id="header-links-browse" href="/home">
+                <span class="header-link-icon material-icons-round">dashboard</span>
+                <p>Browse</p>
+            </a>
             {{#if logged}}
-            <a id="header-links-browse" href="/home">My Posts</a>
+            <a class="header-link" id="header-links-myposts" href="/myposts">
+                <span class="header-link-icon material-icons-round">photo_library</span>
+                <p>My Posts</p>
+            </a>
             {{/if}}
             <form class="search-form">
                 <input value="{{query}}" type="text" class="searchbar" placeholder="Search">
@@ -64,17 +70,24 @@
                 <button type="submit" class="search-button" onclick="return runSearch(this);"><span class="material-icons-round">search</span></button>
             </form>
             <div id="mobile-header-menu">
-                <span class="material-icons-round" onclick="showHideMenu(this);">menu</span>
+                <span class="menu-icon material-icons-round" onclick="showHideMenu(this);">menu</span>
                 <div class="" id="mobile-header-menu-dropdown">
-                    <a id="header-links-browse" href="/home">Browse</a>
+                    <a class="header-link" id="header-links-browse" href="/home">
+                        <span class="header-link-icon material-icons-round">dashboard</span>
+                        <p>Browse</p>
+                    </a>
                     {{#if logged}}
-                    <a id="header-links-browse" href="/home">My Posts</a>
+                    <a class="header-link" id="header-links-myposts" href="/myposts">
+                        <span class="header-link-icon material-icons-round">photo_library</span>
+                        <p>My Posts</p>
+                    </a>
                     <hr>
-                    <a href="/post" id="header-post">Post</a>
-                    <a href="" class="header-logout" id="header-logout">Log Out</a>
+                    <a class="header-link" href="/post" id="header-post"><p>Post</p></a>
+                    <a href="" class="header-logout header-link" id="header-logout"><p>Log Out</p></a>
                     {{else}}
-                    <a href="/login" id="header-login">Log In</a>
-                    <a href="/signup" id="header-signup">Sign Up</a>
+                    <hr>
+                    <a class="header-link" href="/login" id="header-login"><p>Log In</p></a>
+                    <a class="header-link" href="/signup" id="header-signup"><p>Sign Up</p></a>
                     {{/if}}
                 </div>
                 <script>

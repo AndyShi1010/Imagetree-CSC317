@@ -6,6 +6,7 @@ var sharp = require('sharp');
 var multer = require('multer');
 var crypto = require('crypto');
 var PostError = require('../helpers/error/PostError');
+var PostModel = require('../models/Posts');
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "public/images/uploads");
@@ -36,11 +37,12 @@ router.post('/createPost', uploader.single("file"), (req, res, next) => {
 
     sharp(fileUploaded).resize(500).toFile(thumbDestionation)
     .then(() => {
-        let baseSQL = "INSERT INTO posts (title, description, photopath, thumbpath, created, fk_userid) VALUE (?,?,?,?, now(),?);";
-        return db.execute(baseSQL, [title, description, fileUploaded, thumbDestionation, fk_userId]);
+        // let baseSQL = "INSERT INTO posts (title, description, photopath, thumbpath, created, fk_userid) VALUE (?,?,?,?, now(),?);";
+        // return db.execute(baseSQL, [title, description, fileUploaded, thumbDestionation, fk_userId]);
+        return PostModel.create(title, description, fileUploaded, thumbDestionation, fk_userId);
     })
-    .then(([results, fields]) => {
-        if(results && results.affectedRows) {
+    .then((postWasCreated) => {
+        if(postWasCreated) {
             req.flash('success', "Your post was uploaded!");
             res.redirect('/home');
         } else {
