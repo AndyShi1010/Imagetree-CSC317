@@ -105,7 +105,6 @@
     </div>
     <script>
         let logoutList = document.getElementsByClassName('header-logout');
-        console.log(logoutList);
         for (i = 0; i < logoutList.length; i++) {
             logoutList[i].onclick = (event) => {
                 fetch('/users/logout', {

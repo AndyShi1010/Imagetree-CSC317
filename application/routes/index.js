@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var isLoggedIn = require('../middleware/routeprotectors').userIsLoggedIn;
 var notLoggedIn = require('../middleware/routeprotectors').userNotLoggedIn;
-var getRecentPosts = require('../middleware/postgrabber').getRecentPosts;
+const {getRecentPosts, getPostById, getCommentsByPostId} = require('../middleware/postgrabber');
 var db = require('../config/database');
 var PostModel = require('../models/Posts');
 
@@ -36,23 +36,25 @@ router.get('/post', isLoggedIn, function(req, res, next) {
   res.render('postimage', {title: "Post | imagetree", css: ['formui.css', 'postimage.css'], js: ['postimage.js'], hideFooter: true});
 });
 
-router.get('/posts/:id(\\d+)', (req, res, next) => {
-  let baseSQL = "SELECT u.username, p.title, p.description, p.photopath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE p.id=?;";
-  let postId = req.params.id;
+router.get('/posts/:id(\\d+)', getPostById, getCommentsByPostId, (req, res, next) => {
+      res.render('imagepost', {css: ['imagepost.css'], js: ['imagepost.js']});
+  //let baseSQL = "SELECT u.username, p.title, p.description, p.photopath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE p.id=?;";
+  //let postId = req.params.id;
 
-  db.execute(baseSQL, [postId])
-  .then(([results, fields]) => {
-    if (results && results.length) {
-      let post = results[0]
-      let timeNew = new Date(results[0].created);
-      let timeString = timeNew.toLocaleDateString("en-US") + " at " + timeNew.toLocaleTimeString("en-US");
-      console.log(timeString);
-      res.render('imagepost', {currentPost: post, timeString, title: `${post.title} by ${post.username} | imagetree`, css: ['imagepost.css']})
-    } else {
-      req.flash('error', 'Post could not be found.');
-      res.redirect("/home");
-    }
-  })
+  // db.execute(baseSQL, [postId])
+  // .then(([results, fields]) => {
+  //   if (results && results.length) {
+  //     let post = results[0]
+  //     let timeNew = new Date(results[0].created);
+  //     let timeString = timeNew.toLocaleDateString("en-US") + " at " + timeNew.toLocaleTimeString("en-US");
+  //     console.log(timeString);
+  //     res.render('imagepost', {currentPost: post, timeString, title: `${post.title} by ${post.username} | imagetree`, css: ['imagepost.css']})
+  //   } else {
+  //     req.flash('error', 'Post could not be found.');
+  //     res.redirect("/home");
+  //   }
+  // })
+
 })
 
 router.get('/search', (req, res, next) => {
@@ -87,7 +89,7 @@ router.get('/search', (req, res, next) => {
 router.get('/myposts', isLoggedIn, (req, res, next) => { 
   console.log("Params: " + req.session.userId);
   
-  let baseSQL = "SELECT u.username, p.id, p.title, p.description, p.thumbpath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE u.id=?;"
+  let baseSQL = "SELECT u.username, p.id, p.title, p.description, p.thumbpath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE u.id=? ORDER BY created DESC;"
   db.execute(baseSQL, [req.session.userId])
       .then(([results, fields]) => {
         res.locals.results = results;

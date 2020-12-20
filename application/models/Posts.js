@@ -11,7 +11,7 @@ PostModel.create = (title, description, photopath, thumbpath, fk_userId) => {
 };
 
 PostModel.search = (search) => {
-    let baseSQL = "SELECT id, title, description, thumbpath, concat_ws(' ', title, description) AS haystack FROM posts HAVING haystack like ? LIMIT 20;"
+    let baseSQL = "SELECT id, title, description, thumbpath, concat_ws(' ', title, description) AS haystack FROM posts HAVING haystack like ? ORDER BY created DESC LIMIT 20;"
     let sqlSearchQuery = "%" + search + "%";
     return db.execute(baseSQL, [sqlSearchQuery])
     .then(([results, fields]) => {
@@ -20,9 +20,19 @@ PostModel.search = (search) => {
     .catch((err) => Promise.reject(err));
 };
 
-PostModel.getRecentPosts = (numberOfPost) => {
-    let baseSQL = "SELECT id, title, thumbpath, created FROM posts ORDER BY created DESC LIMIT 20";
-    return db.execute(baseSQL,[])
+PostModel.getRecentPosts = (numberOfPosts) => {
+    console.log(numberOfPosts);
+    let baseSQL = "SELECT id, title, thumbpath, created FROM posts ORDER BY created DESC LIMIT ?;";
+    return db.execute(baseSQL,[numberOfPosts.toString()])
+    .then(([results, fields]) => {
+        return Promise.resolve(results);
+    })
+    .catch((err) => Promise.reject(err));
+}
+
+PostModel.getPostById = (postId) => {
+    let baseSQL = "SELECT u.username, p.title, p.description, p.photopath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE p.id=?;";
+    return db.execute(baseSQL, [postId])
     .then(([results, fields]) => {
         return Promise.resolve(results);
     })
