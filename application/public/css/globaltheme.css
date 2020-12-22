@@ -10,6 +10,7 @@
     --accent-color-75: rgba(27,165,71,0.75);
     --accent-color-50: rgba(27,165,71,0.5);
     --accent-color-25: rgba(27,165,71,0.25);
+    --text-black: rgb(30,30,30);
     --main-font: 'Rubik', sans-serif;
     --secondary-font: 'Arimo', sans-serif;
 }
@@ -21,6 +22,7 @@
 
 body {
     font-family: var(--secondary-font);
+    color: var(--text-black);
     padding: 0;
     margin: 0;
 }
@@ -161,9 +163,12 @@ header .header-links a.header-link {
     font-weight: 700;
     font-size: 16px;
     user-select: none;
-    margin-right: 30px;
     display: inline-flex;
     align-items: center;
+}
+
+header .header-links > a.header-link {
+    margin-right: 30px;
 }
 
 header .header-links a.header-link span {
@@ -186,6 +191,76 @@ header .header-links a.header-link:hover span {
 header #header-account {
     display: flex; 
     flex-direction: row;
+    align-items: center;
+}
+
+header #header-account .user-photo-container {
+    display: block;
+    width: auto;
+    height: auto;
+    position: relative;
+    margin-left: 30px;
+}
+
+.user-photo-container .user-photo-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: 0.25s;
+}
+
+.user-photo-container .user-photo-button p{
+    font-weight: 700;
+    font-size: 16px;
+    margin: 0;
+    margin-right: 10px;
+}
+
+.user-photo-container .user-photo-button:hover{
+    background: rgba(0,0,0,0.2);
+}
+
+header #header-account .userphoto {
+    width: 36px;
+    height: 36px;
+    border-radius: 1000px;
+    display: block;
+    user-select: none;
+}
+
+header #header-account .user-photo-container .user-photo-menu {
+    display: flex;
+    /* visibility: hidden; */
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    position: absolute;
+    right: 0px;
+    width: auto;
+    white-space: nowrap;
+    box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.2);
+    border-radius: 4px;
+    /* opacity: 0; */
+    transition: 0.25s;
+    /* transform: scale(0.5); */
+    transform-origin: 100% 0%;
+    z-index: 100;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.user-photo-container.menu-open .user-photo-menu {
+    visibility: visible !important;
+    opacity: 1 !important ;
+    transform: scale(1) !important;
+}
+
+.user-photo-menu a.header-link{
+    padding: 10px;
+    margin-right: 0;
 }
 
 footer.page-footer {
@@ -270,6 +345,7 @@ h1 {
     font-weight: 600;
     font-size: 48px;
     margin: 40px 0px;
+    line-height: 1.25;
 }
 
 h2 {
@@ -277,6 +353,12 @@ h2 {
     font-family: var(--main-font);
     font-size: 24px;
     font-weight: 500;
+    line-height: 1.25;
+}
+
+h3 {
+    margin: 20px 0px;
+    line-height: 1.25;
 }
 
 .main-container-card {
@@ -511,11 +593,20 @@ h2 {
         cursor: pointer;
         transition: 0.25s;
     }
+    #mobile-header-menu span.menu-icon:hover {
+        background: rgba(0,0,0,0.2);
+    }
+    #mobile-header-menu.menu-open span.menu-icon:hover {
+        background: white;
+    }
     #mobile-header-menu.menu-open > span{
         color: var(--accent-color);
         box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.2);
         border-radius: 4px 4px 0px 0px;
         background: white;
+        position: relative;
+        z-index: 100;
+        clip-path: inset(-100% -100% 0% -100%);
     }
     
     #mobile-header-menu-dropdown {
@@ -534,12 +625,31 @@ h2 {
         transition: 0.25s;
         transform: scale(0.5);
         transform-origin: 100% 0%;
-        z-index: 100;
+        z-index: 99;
     }
     #mobile-header-menu.menu-open #mobile-header-menu-dropdown {
         visibility: visible;
         opacity: 1;
         transform: scale(1);
+    }
+    #mobile-header-menu-dropdown .mobile-menu-profile {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px;
+    }
+    #mobile-header-menu-dropdown .mobile-menu-profile p {
+        font-weight: 700;
+        font-size: 16px;
+        margin: 0;
+        margin-left: 10px;
+    }
+    #mobile-header-menu-dropdown .mobile-menu-profile img {
+        width: 28px;
+        height: 28px;
+        border-radius: 1000px;
+        display: block;
+        user-select: none;
     }
     footer.page-footer {
         flex-direction: column;

@@ -18,7 +18,6 @@ for (i = 0; i < flashList.length; i++) {
     }, 5000);
 }
 
-
 function runSearch(element) {
     let searchTerm = "";
     if(element.parentNode.querySelector(".searchbar")) {

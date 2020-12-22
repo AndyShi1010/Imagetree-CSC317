@@ -4,8 +4,28 @@ var db = require('../config/database');
 const { successPrint, errorPrint } = require('../helpers/debug/debugprinters');
 var UserError = require('../helpers/error/UserError');
 var bcrypt = require('bcrypt');
+var isLoggedIn = require('../middleware/routeprotectors').userIsLoggedIn;
+var sharp = require('sharp');
+var multer = require('multer');
+var crypto = require('crypto');
+const fs = require('fs');
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, "public/images/userphoto");
+  },
+  filename: function(req, file, cb) {
+      let fileExt = file.mimetype.split('/')[1];
+      let randomName = crypto.randomBytes(22).toString("hex");
+      cb(null, `${randomName}.${fileExt}`)
+  }
+});
+
+var uploader = multer({storage: storage});
 
 const UserModel = require("../models/Users");
+const { Router } = require('express');
+const { fstat } = require('fs');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -105,46 +125,6 @@ router.post('/register', (req, res, next) => {
       next(err);
     }
   });
-
-  // db.execute("SELECT * FROM users WHERE username=?", [username])
-  // .then(([results, fields]) => {
-  //   if(results && results.length == 0) {
-  //     return db.execute("SELECT * FROM users WHERE email=?", [email]);
-  //   } else {
-  //     throw new UserError("Username already exists", "/signup", 200);
-  //   }
-  // })
-  // .then(([results, fields]) => {
-  //   if(results && results.length == 0) {
-  //     return bcrypt.hash(password, 12);
-  //   } else {
-  //     throw new UserError("Email already exists", "/signup", 200);
-  //   }
-  // })
-  // .then((hashedPassword) => {
-  //     let baseSQL = "INSERT INTO users(`username`,`email`,`password`,`userphoto`,`created`)VALUES(?,?,?,?,now());"
-  //     return db.execute(baseSQL, [username, email, hashedPassword, "/defaultuserphoto.png"]);
-  // })
-  // .then(([results, fields]) => {
-  //   if(results && results.affectedRows) {
-  //     successPrint("User.js: User was created");
-  //     req.flash('success', 'Your account is now ready.');
-  //     res.redirect('/login');
-  //   } else {
-  //     throw new UserError("Server Error: User could not be created", "/signup", 500);
-  //   }
-  // })
-  // .catch((err) => {
-  //   errorPrint("User could not be made", err);
-  //   if(err instanceof UserError) {
-  //     errorPrint(err.getMessage());
-  //     req.flash('error', err.getMessage());
-  //     res.status(err.getStatus());
-  //     res.redirect(err.getRedirectURL());
-  //   } else {
-  //     next(err);
-  //   }
-  // });
 });
 
 router.post('/login', (req, res, next) => {
@@ -153,12 +133,12 @@ router.post('/login', (req, res, next) => {
 
   UserModel.authenticate(username, password)
   .then((loggedUserId) => {
-    console.log(loggedUserId);
     if(loggedUserId > 0) {
       successPrint(`User ${username} is logged in.`);
       req.session.username = username;
       req.session.userId = loggedUserId;
       res.locals.logged = true;
+      res.locals.username = username;
       req.flash('success', 'You are now logged in.');
       res.redirect("/home");
     } 
@@ -194,5 +174,100 @@ router.post('/logout', (req, res, next) => {
     }
   })
 });
+
+router.post('/updateProfilePic', uploader.single("file"), (req, res, next) => {
+  let fileUploaded = req.file.path;
+  let newFile = req.file.destination + `/pfp-${req.file.filename}`;
+  let userId = req.session.userId;
+
+  sharp(fileUploaded).resize({
+    width: 200,
+    height: 200,
+    fit: sharp.fit.center}).toFile(newFile)
+    .then(() => {
+      return UserModel.changeProfilePic(newFile, userId);
+    })
+    .then((userChanged) => {
+      if(userChanged) {
+          req.flash('success', "Your profile was updated!");
+          res.redirect('/settings');
+      } else {
+          throw new PostError('Your profile could not be updated', '/settings', 200);
+      }
+    })
+    .then((result) => {
+      fs.unlink(fileUploaded, ((err) => {if(err){console.log(err);}}));
+      res.send(result + " " + fileUploaded);
+    })
+    .catch((err) => {
+      next(err);
+    })
+})
+
+router.post('/updateProfileName', (req, res, next) => {
+  let username = req.body.username;
+  let userId = req.session.userId;
+
+  UserModel.usernameExists(username)
+  .then((usernameExists) => {
+    if(usernameExists) {
+      throw new UserError("Username already exists", "/settings", 200);
+    }else {
+      return UserModel.changeUsername(username, userId);
+    }
+  })
+  .then((userChanged) => {
+    if(userChanged) {
+      req.flash('success', "Your profile was updated!");
+      res.redirect('/settings');
+    } else {
+      throw new PostError('Your profile could not be updated', '/settings', 200);
+    }
+  })
+  .catch((err) => {
+    errorPrint("User info update failed!");
+    if (err instanceof UserError) {
+      errorPrint(err.getMessage());
+      req.flash('error', err.getMessage());
+      res.status(err.getStatus());
+      res.redirect(err.getRedirectURL());
+    } else {
+      next(err);
+    }
+  });
+})
+
+router.post('/updateProfileEmail', (req, res, next) => {
+  let email = req.body.email;
+  let userId = req.session.userId;
+
+  UserModel.emailExists(email)
+  .then((emailExists) => {
+    if(emailExists) {
+      throw new UserError("Email already exists", "/settings", 200);
+    }else {
+      return UserModel.changeEmail(email, userId);
+    }
+  })
+  .then((userChanged) => {
+    if(userChanged) {
+      req.flash('success', "Your profile was updated!");
+      res.redirect('/settings');
+    } else {
+      throw new PostError('Your profile could not be updated', '/settings', 200);
+    }
+  })
+  .catch((err) => {
+    errorPrint("User info update failed!");
+    if (err instanceof UserError) {
+      errorPrint(err.getMessage());
+      req.flash('error', err.getMessage());
+      res.status(err.getStatus());
+      res.redirect(err.getRedirectURL());
+    } else {
+      next(err);
+    }
+  });
+})
 
 module.exports = router;

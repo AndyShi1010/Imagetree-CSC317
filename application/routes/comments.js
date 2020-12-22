@@ -5,7 +5,7 @@ const {getRecentPosts, getPostById} = require('../middleware/postgrabber');
 const {create, getCommentsForPost} = require('../models/Comments');
 
 router.post("/create", (req, res, next) => {
-    // res.send("Comment success");
+    // console.log("User" + req.session.username);
     if(!req.session.username) {
         errorPrint("Must be logged in to comment");
         res.json({
@@ -41,6 +41,10 @@ router.post("/create", (req, res, next) => {
 
 router.get("/getComments/:id(\\d+)", (req, res, next) => {
     // res.send(req.params.id);
+    console.log(req.session.username);  
+    // if(!req.session.username) {
+    //     res.send("Error: You must be logged in to comment.");
+    // }
     let postId = req.params.id;
     getCommentsForPost(postId)
     .then((results) => {

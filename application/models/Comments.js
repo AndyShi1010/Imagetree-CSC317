@@ -16,7 +16,7 @@ CommentModel.create = (userId, postId, comment) => {
 }
 
 CommentModel.getCommentsForPost = (postId) => {
-    let baseSQL = "SELECT u.username, c.comment, c.created, c.id FROM comments c JOIN users u on u.id=fk_authorid WHERE c.fk_postid=? ORDER BY c.created DESC";
+    let baseSQL = "SELECT u.username, u.userphoto, c.comment, c.created, c.id FROM comments c JOIN users u on u.id=fk_authorid WHERE c.fk_postid=? ORDER BY c.created DESC";
     return db.query(baseSQL, [postId])
     .then(([results, fields]) => {
         return Promise.resolve(results);

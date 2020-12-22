@@ -1,0 +1,96 @@
+body {
+    background-image: url(../assets/pattern2.svg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.settings-container {
+    width: 90vw;
+    max-width: 1920px;
+    height: auto;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    /* background: gray; */
+}
+
+h1 {
+    margin-left: 40px;
+}
+
+.main-container-card {
+    flex-direction: row;
+}
+
+.settings-editor-container form {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.settings-editor-container form:last-of-type {
+    margin-bottom: 0px;
+}
+
+.settings-editor-container form > p {
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.settings-editor-container form > p span {
+    margin-right: 10px;
+}
+
+/* .profile-changer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+} */
+
+button.main-action-button {
+    height: 100%;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#profile-viewer {
+    margin-right: 80px;
+    width: max(200px, 15vw)
+}
+
+#profile-viewer p {
+    line-height: 1.25;
+    margin: 10px 0px;
+}
+
+#profile-viewer p#profile-viewer-useremail {
+    margin: 20px 0px;
+}
+
+#profile-viewer .userphoto {
+    width: 150px;
+    height: 150px;
+    border-radius: 1000px;
+}
+
+.profile-changer .input-container {
+    width: 100%;
+}
+
+.input-container .image-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 1000px;
+}
+
+@media only screen and (max-width: 960px) {
+    .main-container-card {
+        flex-direction: column;
+    }
+    #profile-viewer {
+        width: 100%;
+    }
+}

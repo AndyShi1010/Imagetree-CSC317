@@ -31,7 +31,7 @@ PostModel.getRecentPosts = (numberOfPosts) => {
 }
 
 PostModel.getPostById = (postId) => {
-    let baseSQL = "SELECT u.username, p.title, p.description, p.photopath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE p.id=?;";
+    let baseSQL = "SELECT u.username, u.userphoto, p.title, p.description, p.photopath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE p.id=?;";
     return db.execute(baseSQL, [postId])
     .then(([results, fields]) => {
         return Promise.resolve(results);

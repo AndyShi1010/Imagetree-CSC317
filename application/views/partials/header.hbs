@@ -45,9 +45,9 @@
                 <p>Browse</p>
             </a>
             {{#if logged}}
-            <a class="header-link" id="header-links-myposts" href="/myposts">
+            <a class="header-link" id="header-links-myposts" href="/yourposts">
                 <span class="header-link-icon material-icons-round">photo_library</span>
-                <p>My Posts</p>
+                <p>Your Posts</p>
             </a>
             {{/if}}
             <form class="search-form">
@@ -57,7 +57,17 @@
             <div id="header-account">
                 {{#if logged}}
                     <a href="/post" class="primary-action-button action-button-right-aligned" id="header-post"><span class="material-icons-round">publish</span>Post</a>
-                    <a href="" class="secondary-action-button action-button-right-aligned header-logout" id="header-logout">Log Out</a>
+                    {{!-- <a href="" class="secondary-action-button action-button-right-aligned header-logout" id="header-logout">Log Out</a> --}}
+                    <div class="user-photo-container" id="user-photo-menu-container" onclick="">
+                        <div class="user-photo-button" onclick="showHideMenu(this);">
+                            <p id="user-photo-username">{{username}}</p>
+                            <img src="/{{userPhoto}}" alt="" class="userphoto">
+                        </div>
+                        <div class="user-photo-menu" id="user-photo-menu">
+                            <a href="/settings" class="user-photo-menu-link header-link" id="user-photo-menu-settings"><p>Settings</p></a>
+                            <a href="" class="user-photo-menu-link header-logout header-link" id="user-photo-menu-logout"><p>Log Out</p></a>
+                        </div>
+                    </div>
                 {{else}}
                     <a href="/login" class="secondary-action-button action-button-right-aligned" id="header-login">Log In</a>
                     <a href="/signup" class="primary-action-button action-button-right-aligned" id="header-signup">Sign Up</a>
@@ -77,12 +87,18 @@
                         <p>Browse</p>
                     </a>
                     {{#if logged}}
-                    <a class="header-link" id="header-links-myposts" href="/myposts">
+                    <a class="header-link" id="header-links-myposts" href="/yourposts">
                         <span class="header-link-icon material-icons-round">photo_library</span>
-                        <p>My Posts</p>
+                        <p>Your Posts</p>
                     </a>
                     <hr>
+                    <div class="mobile-menu-profile">
+                        <img src="/{{userPhoto}}" alt="" class="userphoto">
+                        <p id="user-photo-username">{{username}}</p>
+                    </div>
+                    <hr>
                     <a class="header-link" href="/post" id="header-post"><p>Post</p></a>
+                    <a class="header-link" href="/settings" id="header-post"><p>Settings</p></a>
                     <a href="" class="header-logout header-link" id="header-logout"><p>Log Out</p></a>
                     {{else}}
                     <hr>
@@ -91,12 +107,27 @@
                     {{/if}}
                 </div>
                 <script>
+                    window.addEventListener('click', function(e){
+                        if (document.getElementById('user-photo-menu-container')) {
+                            if (!document.getElementById('user-photo-menu-container').contains(e.target) && (!document.getElementById('user-photo-menu').contains(e.target))){
+                            document.getElementById('user-photo-menu-container').classList.remove("menu-open");
+                            } 
+                        }
+                        if (document.getElementById('mobile-header-menu')) {
+                            if (!document.getElementById('mobile-header-menu').contains(e.target) && (!document.getElementById('mobile-header-menu-dropdown').contains(e.target))){
+                            document.getElementById('mobile-header-menu').classList.remove("menu-open");
+                            } 
+                        }
+                    })
                     function showHideMenu(element) {
                         element.parentNode.classList.toggle("menu-open");
                     }
                     window.addEventListener("resize", function() {
                         if (window.innerWidth > 960) {
                             document.getElementById('mobile-header-menu').classList.remove("menu-open");
+                        }
+                        if (window.innerWidth < 960) {
+                            document.getElementById('user-photo-menu-container').classList.remove("menu-open");
                         }
                     })
                 </script>

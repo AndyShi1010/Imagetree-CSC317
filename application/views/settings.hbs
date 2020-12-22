@@ -1,0 +1,60 @@
+<div class="settings-container">
+  {{!-- <div class="flex-center-column"> --}}
+  <header>
+    <h1>Settings</h1>
+  </header>
+  {{!-- <form class="main-container-card" method="POST" action="/users/login" enctype="application/x-www-form-urlencoded"> --}}
+  
+  <div class="main-container-card">
+    <div id="profile-viewer">
+      <img src="/{{userPhoto}}" alt="" class="userphoto">  
+      <h3 id="profile-viewer-username">{{username}}</h3>
+      <p id="profile-viewer-useremail"><strong>{{userEmail}}</strong></p>
+      <p>User Since:</p>
+      <p id="profile-viewer-usercreated">{{userCreated}}</p>
+
+    </div>
+    <div class="settings-editor-container">
+      <form method="POST" enctype="application/x-www-form-urlencoded" action="/users/updateProfileName">
+      <h2>Change Username</h2>
+        <div class="input-container">
+          <label for="username">Username</label> 
+          <input name="username" class="input-field" type="text" id="username" onchange="validateUsername(this);" required>
+        </div>
+      <button class="main-action-button" id="change-button" type="submit">Change</button>
+      </form>
+
+      <form method="POST" enctype="application/x-www-form-urlencoded" action="/users/updateProfileEmail">
+      <h2>Change Email</h2>
+        <div class="input-container">
+          <label for="email">Email</label>
+          <input name="email" class="input-field" type="email" id="email" required>
+        </div>
+      <button class="main-action-button" id="change-button" type="submit">Change</button>
+      </form>
+
+      <form method="POST" enctype="multipart/form-data" action="/users/updateProfilePic">
+      <h2>Change Profile Picture</h2>
+      <p><span class="material-icons-round">info</span>Images will be automatically center cropped.</p>
+        <div class="input-container">
+          <label class="input-file" for="post-file">
+            <p class="input-file-labeltext">Upload File</p>
+            <input name="file" class="filebox" type="file" id="post-file" accept="image/*" onchange="displayFileName(this, event);" required>
+            <span class="rendered-filebox">Select File</span>
+          </label>
+        </div>
+      <button class="main-action-button" id="change-button" type="submit">Change</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function timestampLocalizer(date) {
+    let newDate = new Date(date);
+    return newDate.toLocaleDateString("en-US") + " at " + newDate.toLocaleTimeString("en-US");
+  }
+
+  let userCreatedElement = document.getElementById("profile-viewer-usercreated");
+  userCreatedElement.textContent = timestampLocalizer(userCreatedElement.textContent);
+</script>
+
