@@ -4,7 +4,7 @@ var passwordValid = false;
 var passwordSame = false;
 
 function validateUsername(inputElement) {
-    const beginWithAZ = /[A-Za-z]/g;
+    const beginWithAZ = /^[A-Za-z]/;
     const threePlusAlphaNum = /(.*[A-Za-z0-9]){3}/g;
     if (inputElement.parentNode.getElementsByClassName('error-msg').length != 0) {
         while (inputElement.parentNode.getElementsByClassName('error-msg')[0]) {
@@ -33,7 +33,7 @@ function validateEmail(inputElement) {
 function validatePassword(inputElement) {
     const containUpper = /[A-Z]+/g;
     const containNum = /\d+/g;
-    const containSpecial = /[/*\-+!@#$^&]+/g
+    const containSpecial = /[/*\-+!@#$^&]+/g;
     if (inputElement.parentNode.getElementsByClassName('error-msg').length != 0) {
         while (inputElement.parentNode.getElementsByClassName('error-msg')[0]) {
             inputElement.parentNode.getElementsByClassName('error-msg')[0].parentNode.removeChild(inputElement.parentNode.getElementsByClassName('error-msg')[0]);

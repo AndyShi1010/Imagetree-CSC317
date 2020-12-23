@@ -34,28 +34,11 @@ router.get('/privacy', getProfile, function(req, res, next) {
 
 // router.use('/post', isLoggedIn);
 router.get('/post', getProfile, isLoggedIn, function(req, res, next) {
-  res.render('postimage', {title: "Post | imagetree", css: ['formui.css', 'postimage.css'], js: ['postimage.js'], hideFooter: true});
+  res.render('postimage', {title: "Post | imagetree", css: ['formui.css', 'postimage.css'], js: ['postimage.js'], hideFooter: true, minFlash: true});
 });
 
 router.get('/posts/:id(\\d+)', getProfile, getPostById, getCommentsByPostId, (req, res, next) => {
       res.render('imagepost', {css: ['imagepost.css'], js: ['imagepost.js']});
-  //let baseSQL = "SELECT u.username, p.title, p.description, p.photopath, p.created FROM users u JOIN posts p ON u.id=fk_userid WHERE p.id=?;";
-  //let postId = req.params.id;
-
-  // db.execute(baseSQL, [postId])
-  // .then(([results, fields]) => {
-  //   if (results && results.length) {
-  //     let post = results[0]
-  //     let timeNew = new Date(results[0].created);
-  //     let timeString = timeNew.toLocaleDateString("en-US") + " at " + timeNew.toLocaleTimeString("en-US");
-  //     console.log(timeString);
-  //     res.render('imagepost', {currentPost: post, timeString, title: `${post.title} by ${post.username} | imagetree`, css: ['imagepost.css']})
-  //   } else {
-  //     req.flash('error', 'Post could not be found.');
-  //     res.redirect("/home");
-  //   }
-  // })
-
 })
 
 router.get('/search', getProfile, (req, res, next) => {

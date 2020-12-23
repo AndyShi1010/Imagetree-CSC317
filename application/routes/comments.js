@@ -3,9 +3,20 @@ const { errorPrint, successPrint } = require('../helpers/debug/debugprinters');
 var router = express.Router();
 const {getRecentPosts, getPostById} = require('../middleware/postgrabber');
 const {create, getCommentsForPost} = require('../models/Comments');
+const {check, validationResult} = require('express-validator');
 
-router.post("/create", (req, res, next) => {
+router.post("/create", [
+    check('comment').notEmpty().withMessage("Comment cannot be empty.")
+],(req, res, next) => {
     // console.log("User" + req.session.username);
+    let {comment, postId} = req.body;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      console.log({errors: errors.array()});
+      req.flash('error', "Comment cannot be empty.");
+      return res.redirect(`/posts/${postId}`);
+    }
+
     if(!req.session.username) {
         errorPrint("Must be logged in to comment");
         res.json({
@@ -14,7 +25,6 @@ router.post("/create", (req, res, next) => {
             message: "Must be logged in to comment"
         });
     } else {
-        let {comment, postId} = req.body;
         let username = req.session.username;
         let userId = req.session.userId;
         create(userId, postId, comment)

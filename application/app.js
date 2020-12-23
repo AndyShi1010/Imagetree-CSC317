@@ -15,7 +15,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 var commentsRouter = require('./routes/comments')
-// var dbRouter = require('./routes/dbtest');
 
 var app = express();
 
@@ -66,14 +65,13 @@ app.use((req, res, next) => {
 })
 
 app.use('/', indexRouter);
-// app.use('/dbtest', dbRouter);
+
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 
 app.use((err, req, res, next) => {
     res.status(500);
-    // res.send('Something went wrong! ' + err);
     res.render('error', {err_msg: err});
 })
 

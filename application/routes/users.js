@@ -9,6 +9,7 @@ var sharp = require('sharp');
 var multer = require('multer');
 var crypto = require('crypto');
 const fs = require('fs');
+const {check, validationResult} = require('express-validator');
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -33,62 +34,31 @@ router.get('/', function(req, res, next) {
   // throw new UserError('Post could not be created.', '/post', 200);
 });
 
-router.post('/register', (req, res, next) => {
+router.post('/register', 
+[
+  check('username').notEmpty().withMessage("Username cannot be empty."), 
+  check('username').matches(/^[A-Za-z]/).withMessage("Username must start with a letter."),
+  check('username').matches(/(.*[A-Za-z0-9]){3}/g).withMessage("Username must contain 3 or more alphanumeric characters."),
+  check('password').notEmpty().withMessage("Password cannot be empty."),
+  check('email').isEmail().withMessage("Email must be valid."),
+  check('password').matches(/[A-Z]+/g).withMessage("Password must contain an uppercase letter."),
+  check('password').matches(/\d+/g).withMessage("Password must contain a number."),
+  check('password').matches(/[/*\-+!@#$^&]+/g).withMessage("Password must contain one of the following special characters: / * - + ! @ # $ ^ &."),
+  check('password').isLength({min: 8}).withMessage("Password must be 8 characters or longer.")
+],
+(req, res, next) => {
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
   let confirmpassword = req.body.confirmpassword;
 
-  // let errorString = "Error: ";
-  // let invalid = false;
-  // const beginWithAZ = /[A-Za-z]/g;
-  // const threePlusAlphaNum = /(.*[A-Za-z0-9]){3}/g;
-  // const containUpper = /[A-Z]+/g;
-  // const containNum = /\d+/g;
-  // const containSpecial = /[/*\-+!@#$^&]+/g
 
-  // if(beginWithAZ.test(username) == false) {
-  //   errorString += " Username must start with a letter.";
-  //   invalid = true;
-  // }
-
-  // if(threePlusAlphaNum.test(username) == false) {
-  //   errorString += " Username must contain 3 or more alphanumeric characters.";
-  //   invalid = true;
-  // }
-
-  // if(containUpper.test(password) == false) {
-  //   errorString += " Password must contain an uppercase letter.";
-  //   invalid = true;
-  // }
-
-  // if(containNum.test(password) == false) {
-  //   errorString += " Password must contain a number.";
-  //   invalid = true;
-  // }
-
-  // if(containSpecial.test(password) == false) {
-  //   errorString += " Password must contain one of the following special characters: / * - + ! @ # $ ^ &.";
-  //   invalid = true;
-  // }
-
-  // if(password.length < 8) {
-  //   errorString += " Password must be 8 characters or longer.";
-  //   invalid = true;
-  // }
-
-  // if (password != confirmpassword) {
-  //   errorString += " Passwords do not match.";
-  //   invalid = true;
-  // }
-
-  // if (invalid) {
-  //   console.log("Error thrown");
-  //   req.flash('error', errorString);
-  //   res.status(500);
-  //   res.redirect("/signup");
-  //   next(new UserError(errorString, "/signup", 500));
-  // }
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    console.log({errors: errors.array()});
+    req.flash('error', "User could not be made.");
+    return res.redirect('/signup');
+  }
 
   UserModel.usernameExists(username)
   .then((usernameExists) => {
@@ -127,9 +97,19 @@ router.post('/register', (req, res, next) => {
   });
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', [
+  check('username').notEmpty().withMessage("Username cannot be empty."), 
+  check('password').notEmpty().withMessage("Password cannot be empty."),
+], (req, res, next) => {
   let username = req.body.username;
   let password = req.body.password;
+
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    console.log({errors: errors.array()});
+    req.flash('error', "User could not be logged in.");
+    return res.redirect('/login');
+  }
 
   UserModel.authenticate(username, password)
   .then((loggedUserId) => {
@@ -176,6 +156,7 @@ router.post('/logout', (req, res, next) => {
 });
 
 router.post('/updateProfilePic', uploader.single("file"), (req, res, next) => {
+
   let fileUploaded = req.file.path;
   let newFile = req.file.destination + `/pfp-${req.file.filename}`;
   let userId = req.session.userId;
@@ -204,9 +185,20 @@ router.post('/updateProfilePic', uploader.single("file"), (req, res, next) => {
     })
 })
 
-router.post('/updateProfileName', (req, res, next) => {
+router.post('/updateProfileName', [
+  check('username').notEmpty().withMessage("Username cannot be empty."),
+  check('username').matches(/^[A-Za-z]/).withMessage("Username must start with a letter."),
+  check('username').matches(/(.*[A-Za-z0-9]){3}/g).withMessage("Username must contain 3 or more alphanumeric characters.") 
+], (req, res, next) => {
   let username = req.body.username;
   let userId = req.session.userId;
+
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    console.log({errors: errors.array()});
+    req.flash('error', "Your profile could not be updated. Username is invalid.");
+    return res.redirect('/settings');
+  }
 
   UserModel.usernameExists(username)
   .then((usernameExists) => {
@@ -221,7 +213,7 @@ router.post('/updateProfileName', (req, res, next) => {
       req.flash('success', "Your profile was updated!");
       res.redirect('/settings');
     } else {
-      throw new PostError('Your profile could not be updated', '/settings', 200);
+      throw new PostError('Your profile could not be updated.', '/settings', 200);
     }
   })
   .catch((err) => {
@@ -237,9 +229,20 @@ router.post('/updateProfileName', (req, res, next) => {
   });
 })
 
-router.post('/updateProfileEmail', (req, res, next) => {
+router.post('/updateProfileEmail', [
+  check('email').notEmpty().withMessage("Email cannot be empty."),
+  check('email').isEmail().withMessage("Email must be valid."),
+  check('email').normalizeEmail(),
+], (req, res, next) => {
   let email = req.body.email;
   let userId = req.session.userId;
+
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    console.log({errors: errors.array()});
+    req.flash('error', "Your profile could not be updated. Email is invalid.");
+    return res.redirect('/settings');
+  }
 
   UserModel.emailExists(email)
   .then((emailExists) => {

@@ -7,6 +7,7 @@ var multer = require('multer');
 var crypto = require('crypto');
 var PostError = require('../helpers/error/PostError');
 var PostModel = require('../models/Posts');
+const {check, validationResult} = require('express-validator');
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "public/images/uploads");
@@ -34,6 +35,14 @@ router.post('/createPost', uploader.single("file"), (req, res, next) => {
     if (description == undefined) {
         description = "";
     }
+
+    //IDKY its not grabbing my inputs
+    // const errors = validationResult(req);
+    // if(!errors.isEmpty()) {
+    //     console.log({errors: errors.array()});
+    //     req.flash('error', "Your post could not be created.");
+    //     return res.redirect('/post');
+    // }
 
     sharp(fileUploaded).resize(500).toFile(thumbDestionation)
     .then(() => {

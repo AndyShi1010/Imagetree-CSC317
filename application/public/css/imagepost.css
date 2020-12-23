@@ -2,6 +2,7 @@
     width: 80vw;
     height: auto;
     margin: auto;
+    max-width: 1920px;
     margin-top: 40px;
     margin-bottom: 40px;
     display: flex;
@@ -118,7 +119,6 @@
     margin: 40px 40px 40px 80px;
     width: max(300px, 30vw);
     height: min-content;
-    flex-direction: column;
     position: sticky;
     top: 120px;
 }
