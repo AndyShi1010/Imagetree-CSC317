@@ -18,10 +18,35 @@ Please follow the instructions below and fill in the information requested when 
 
 # Build/Run Instructions
 
-## Build Instructions
-1. 
-2. steps here
+##Automated Build & Run (Windows only)
+1. Ensure you have node and sql installed.
+2. Create database using the database.sql file located in /application/config
+2. Run the runApp.bat file located in the root directory in terminal of choice. 
+This will run npm install, npm start, and open localhost:3000 in a new browser tab.
 
-## Run Instructions
-1. steps here
-2. steps here 
+##Manual Build & Run
+
+### Build Instructions
+1. Open a terminal and CD into the application folder of the root directory.
+2. Run npm install to install dependencies
+3. If that does not work, install the following packages
+- bcrypt
+- colors
+- cookie-Parser
+- debug
+- express
+- express-flash
+- express-handlebars
+- express-mysql-session
+- express-session
+- express-validator
+- morgan
+- multer
+- mysql2
+- node-gyp
+- sharp
+
+### Run Instructions
+1. Open a terminal and CD into the application folder of the root directory.
+2. Run npm start (or nodemon if it is installed).
+3. Open localhost:3000 in a new browser tab.
