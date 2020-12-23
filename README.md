@@ -18,13 +18,13 @@ Please follow the instructions below and fill in the information requested when 
 
 # Build/Run Instructions
 
-##Automated Build & Run (Windows only)
+## Automated Build & Run (Windows only)
 1. Ensure you have node and sql installed.
 2. Create database using the database.sql file located in /application/config
 2. Run the runApp.bat file located in the root directory in terminal of choice. 
 This will run npm install, npm start, and open localhost:3000 in a new browser tab.
 
-##Manual Build & Run
+## Manual Build & Run
 
 ### Build Instructions
 1. Open a terminal and CD into the application folder of the root directory.
