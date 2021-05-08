@@ -1,5 +1,7 @@
 # CSC 317 Term Project
 
+## This is an archive of the orignal Imagetree project. It can only be used as a reference.
+
 ## Purpose
 
 The purpose of this repository is to store all the code for your web application. This also includes the history of all commits made and who made them. Only code submitted on the master branch will be graded.
